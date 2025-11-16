@@ -172,3 +172,39 @@ export const featuresData = [
   },
 ];
 
+
+// ==== Faq Array ====
+export const faqData = [
+  {
+    id: 1,
+    question: "How does this posture corrector work?",
+    answer:
+      "A posture corrector works by providing support and gentle alignment to your shoulders, back, and spine, encouraging you to maintain proper posture throughout the day. Here’s how it typically functions: A posture corrector works by providing support and gentle alignment to your shoulders.",
+  },
+  {
+    id: 2,
+    question: "Is it suitable for all ages and body types?",
+    answer:
+      "Yes, most posture correctors are designed to be adjustable and flexible, making them suitable for various ages and body types. However, it's always best to check size guidelines for the perfect fit.",
+  },
+  {
+    id: 3,
+    question: "Does it really help with back pain and posture improvement?",
+    answer:
+      "Yes, consistent use can help reduce back pain by supporting proper alignment of your spine and shoulders. It encourages healthier posture habits over time.",
+  },
+  {
+    id: 4,
+    question: "Does it have smart features like vibration alerts?",
+    answer:
+      "Some posture corrector models come with built-in smart sensors that provide gentle vibration alerts when you slouch. Check the product specifications to confirm if this feature is included.",
+  },
+  {
+    id: 5,
+    question: "How will I be notified when the product is back in stock?",
+    answer:
+      "You will receive a notification via email or SMS once the product is back in stock, depending on your chosen preference during the 'Notify Me' setup.",
+  },
+];
+
+
