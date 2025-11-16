@@ -3,7 +3,7 @@ import { featuresData } from "../../../assets/assets";
 
 const Features = () => {
   return (
-    <div>
+    <div className="px-9">
       {featuresData.map((item) => (
         <div
           key={item.id}

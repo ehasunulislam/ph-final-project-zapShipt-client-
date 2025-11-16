@@ -171,3 +171,4 @@ export const featuresData = [
     img: safeDelivery,
   },
 ];
+
