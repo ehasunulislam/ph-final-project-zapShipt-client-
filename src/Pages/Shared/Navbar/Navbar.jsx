@@ -7,10 +7,10 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink>Ser</NavLink>
+        <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink>Ser</NavLink>
+        <NavLink to="/coverage">Coverage</NavLink>
       </li>
     </>
   );
@@ -29,7 +29,7 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">
+        <a className="text-xl">
           <Logo></Logo>
         </a>
       </div>
