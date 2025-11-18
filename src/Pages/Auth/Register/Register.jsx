@@ -1,16 +1,32 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
+import useAuth from "../../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
+  const { registerUser } = useAuth();
+
+  // handle register function
   const handleRegister = (data) => {
     console.log(data);
+    registerUser(data.email, data.password)
+    .then((getUser) => {
+      console.log(getUser.user)
+      toast.success("You are registered successfully");
+      reset();
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error(err.message)
+    })
   };
 
   return (
@@ -37,7 +53,6 @@ const Register = () => {
             <p className="text-red-500">Name is required</p>
           )}
 
-
           {/* Email */}
           <label className="label">
             <span className="label-text font-medium">Email</span>
@@ -51,7 +66,6 @@ const Register = () => {
           {errors.email?.type === "required" && (
             <p className="text-red-500">Email is required</p>
           )}
-
 
           {/* Password */}
           <label className="label">
@@ -83,10 +97,9 @@ const Register = () => {
             </p>
           )}
 
-
           <p className="text-[0.9236rem]">
             Already have an account?
-            <Link to="/login" className="text-blue-500">
+            <Link to="/login" className="text-blue-500 ps-1">
               Login
             </Link>
           </p>
