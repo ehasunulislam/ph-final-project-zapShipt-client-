@@ -1,9 +1,24 @@
 import React from "react";
 import Logo from "../../../Components/Logo/Logo";
 import { FaBars } from "react-icons/fa";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
+import useAuth from "../../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
+
+  const {user, logOut} = useAuth();
+
+  const handleLogOut = () => {
+    logOut()
+    .then(() => {
+      toast.success("Log out successfully")
+    })
+    .catch((err) => {
+      toast.error(err.massage)
+    })
+  }
+
   const links = (
     <>
       <li>
@@ -40,7 +55,9 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        {
+          user ? <a className="btn" onClick={handleLogOut}>Log Out</a> : <Link to="/login" className="btn">Login</Link>
+        }
       </div>
     </div>
   );
