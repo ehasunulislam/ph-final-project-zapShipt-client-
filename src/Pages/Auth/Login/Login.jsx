@@ -10,9 +10,11 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm();
 
-  const { LoginUser } = useAuth();
+  const { LoginUser, sendPasswordLink } = useAuth();
+  const email = watch("email");
 
   // handle login
   const handleLogin = (data) => {
@@ -21,6 +23,22 @@ const Login = () => {
       .then((getUser) => {
         console.log(getUser.user);
         toast.success("User login successfully");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
+
+  // handle password reset
+  const handleResetPassword = () => {
+    if (!email) {
+      toast.error("Please enter your email first");
+      return;
+    }
+
+    sendPasswordLink(email)
+      .then(() => {
+        toast.success("Password reset link send on your email");
       })
       .catch((err) => {
         toast.error(err.message);
@@ -89,7 +107,11 @@ const Login = () => {
 
           {/* Forgot Password */}
           <div className="flex justify-end">
-            <button type="button" className="link link-hover text-sm">
+            <button
+              type="button"
+              className="link link-hover text-sm"
+              onClick={handleResetPassword}
+            >
               Forgot password?
             </button>
           </div>

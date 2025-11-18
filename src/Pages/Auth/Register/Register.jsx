@@ -5,6 +5,7 @@ import useAuth from "../../../Hooks/useAuth";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import SocialLogin from "../Social-login/SocialLogin";
+import axios from "axios";
 
 const Register = () => {
   const {
@@ -14,14 +15,43 @@ const Register = () => {
     reset,
   } = useForm();
 
-  const { registerUser } = useAuth();
+  const { registerUser, updateUserProfile } = useAuth();
 
   // handle register function
   const handleRegister = (data) => {
-    console.log(data);
+    console.log(data.photo[0]);
+    const profileImage = data.photo[0];
+
     registerUser(data.email, data.password)
       .then((getUser) => {
         console.log(getUser.user);
+        // 1. store the image with from data
+        const fromData = new FormData();
+        fromData.append("image", profileImage);
+        const image_Api_Url = `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_image_host
+        }`;
+
+        // 2. fetch data with axios
+        axios.post(image_Api_Url, fromData)
+        .then((res) => {
+          console.log("after image upload", res.data.data.url);
+
+          // update user profile for photo
+          const userProfile = {
+            displayName: data.name,
+            photoURL: res.data.data.url,
+          };
+
+          updateUserProfile(userProfile)
+          .then(() => {
+            console.log('user profile updated done')
+          })
+          .catch((err) => {
+            console.log(err.message)
+          })
+        });
+
         toast.success("You are registered successfully");
         reset();
       })
@@ -39,6 +69,22 @@ const Register = () => {
         </h2>
 
         <form onSubmit={handleSubmit(handleRegister)} className="space-y-2">
+          {/* image upload */}
+          <div>
+            <label className="block mb-1 font-medium text-gray-700">
+              Photo
+            </label>
+            <input
+              type="file"
+              className="file-input w-full"
+              placeholder="Your Photo"
+              {...register("photo", { required: true })}
+            />
+            {errors.photo && (
+              <p className="text-red-500 text-sm">photo is required</p>
+            )}
+          </div>
+
           {/* Name */}
           <div>
             <label className="block mb-1 font-medium text-gray-700">Name</label>

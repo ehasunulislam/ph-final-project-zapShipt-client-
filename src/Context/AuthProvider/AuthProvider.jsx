@@ -4,9 +4,11 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../../firebase/firebase.init";
 
@@ -38,13 +40,25 @@ const AuthProvider = ({ children }) => {
   const logOut = () => {
     setLoading(true);
     return signOut(auth);
-  }
+  };
+
+  // update user profile
+  const updateUserProfile = (profile) => {
+    return updateProfile(auth.currentUser, profile);
+  };
+
+  /* Password Reset Email start */
+  const sendPasswordLink = (email) => {
+    setLoading(true);
+    return sendPasswordResetEmail(auth, email);
+  };
+  /* Password Reset Email end */
 
   // observer
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false)
+      setLoading(false);
     });
     return () => {
       unsubscribe();
@@ -56,6 +70,8 @@ const AuthProvider = ({ children }) => {
     LoginUser,
     signInGoogle,
     logOut,
+    updateUserProfile,
+    sendPasswordLink,
     user,
     loading,
   };
