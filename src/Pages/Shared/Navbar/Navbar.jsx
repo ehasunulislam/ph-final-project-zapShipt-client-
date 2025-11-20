@@ -4,7 +4,7 @@ import { FaBars } from "react-icons/fa";
 import { Link, NavLink } from "react-router";
 import useAuth from "../../../Hooks/useAuth";
 import toast from "react-hot-toast";
-import  './Navbar.css';
+import "./Navbar.css";
 
 const Navbar = () => {
   const { user, logOut } = useAuth(); // 62-1 min: 4.22
@@ -36,6 +36,14 @@ const Navbar = () => {
       <li>
         <NavLink to="/coverage">Coverage</NavLink>
       </li>
+
+      {user && (
+        <>
+          <li>
+            <NavLink to="/dashboard/my-parcels">My Parcel</NavLink>
+          </li>
+        </>
+      )}
     </>
   );
 
